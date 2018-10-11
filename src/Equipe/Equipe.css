@@ -1,0 +1,17 @@
+.Equipe-Image {
+    width: 100px;
+    height: 100px;
+}
+
+.Equipe-Role {
+    font-weight: bold;
+}
+
+.Equipe-Panel {
+    background-color: #f5f5f5;
+}
+
+.Equipe-Header {
+    padding-left: 40px;
+    font-size: medium;
+}
