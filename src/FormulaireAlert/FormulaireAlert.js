@@ -8,6 +8,7 @@ import StepButton from "../tools/StepButton";
 import Navigationbar from "../navigation/Navigationbar";
 import ResponseModal from "./ResponseModal";
 import '../App.css'
+import InfoPanel from "./InfoPanel";
 
 const QUESTIONS_LIST = [
   {
@@ -213,14 +214,13 @@ class FormulaireAlert extends Component {
 
     this.state = {
       id: FormulaireAlert.defaultProps.id,
-      question: FormulaireAlert.defaultProps.question,
+      label: FormulaireAlert.defaultProps.label,
       responses: FormulaireAlert.defaultProps.responses,
       selectedResponse: {label: ""},
       previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
       finalResponse: "",
-      isFinished: false,
       show: false,
-
+      info: ""
     };
   }
 
@@ -244,7 +244,7 @@ class FormulaireAlert extends Component {
 
   static propTypes = {
     id: PropTypes.string.isRequired,
-    question: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired
   };
 
   handleClose = () => {
@@ -259,19 +259,26 @@ class FormulaireAlert extends Component {
     });
   };
 
+  handleInfo = (info) => {
+    this.setState({
+      info: info
+    });
+  };
+
   setSelectedResponse = (response) => {
     this.setState({
       selectedResponse: response
     })
   };
 
-  getNextQuestion = (nextQuestionId) => {
+  getNextQuestion = (response) => {
     if(this.state.selectedResponse.label !== ""){
-      const nextQuestion = QUESTIONS_LIST2.filter(question => question.id === nextQuestionId);
+      const nextQuestion = QUESTIONS_LIST2.filter(question => question.id === response.nextQuestionId);
+      this.handleInfo(response.info);
       if(nextQuestion[0] !== undefined) {
         this.setState({
           id: nextQuestion[0].id,
-          question: nextQuestion[0].question,
+          label: nextQuestion[0].label,
           responses: nextQuestion[0].responses,
           selectedResponse: {label: ""},
           previousQuestionId: nextQuestion[0].previousQuestionId
@@ -308,7 +315,7 @@ class FormulaireAlert extends Component {
       const previousQuestion = QUESTIONS_LIST2.filter(question => question.id === previousQuestionId);
       this.setState({
         id: previousQuestion[0].id,
-        question: previousQuestion[0].question,
+        label: previousQuestion[0].label,
         responses: previousQuestion[0].responses,
         selectedResponse: {label: ""},
         previousQuestionId: previousQuestion[0].previousQuestionId
@@ -334,7 +341,7 @@ class FormulaireAlert extends Component {
               <Panel>
                 <Panel.Heading>Questionaire lanceur d'alerte</Panel.Heading>
                 <Panel.Body>
-                  <Question label={this.state.question}/>
+                  <Question label={this.state.label}/>
                   <br/>
 
                   <ResponsesList
@@ -344,7 +351,6 @@ class FormulaireAlert extends Component {
                   <br/>
 
                   <Row>
-                    <p>Réponse : {this.state.selectedResponse.label}</p>
                     <Col xs={2} xsOffset={1} mdOffset={1} md={2}>
                       <StepButton label={"Précédent"}
                                   onClick={this.getPreviousQuestion}
@@ -354,12 +360,13 @@ class FormulaireAlert extends Component {
                     <Col xsOffset={4} xs={2} mdOffset={6} md={2}>
                       <StepButton label={"Suivant"}
                                   onClick={this.getNextQuestion}
-                                  parameter={this.state.selectedResponse.nextQuestionId}
+                                  parameter={this.state.selectedResponse}
                                   style={"primary"}/>
                     </Col>
                   </Row>
                 </Panel.Body>
               </Panel>
+              <InfoPanel info={this.state.info}/>
             </Col>
           </Row>
         </Grid>
