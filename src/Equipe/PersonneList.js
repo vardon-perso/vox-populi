@@ -6,8 +6,7 @@ const PersonneList = ({people}) => (
   <Grid>
     <Row>
       {people.map( personne =>
-        <Col bsStyle={"m-2"}
-            xs={2} md={2}>
+        <Col xs={12} md={2}>
           <Personne nom={personne.nom}
                     prenom={personne.prenom}
                     role={personne.role}

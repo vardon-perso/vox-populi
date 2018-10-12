@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Collapse, Fade, PageHeader} from "react-bootstrap";
+import {PageHeader} from "react-bootstrap";
 import '../App.css'
 import './Equipe.css'
 import PersonneList from "./PersonneList";
@@ -10,12 +10,12 @@ class Equipe extends Component {
     super();
     this.state = {
       people: [
-        {nom: "Elric", prenom: "Edward", role: "Alchimiste d'Etat", imagePath: "/asset/Edward.jpeg"},
-        {nom: "Elric", prenom: "Alphonse", role: "Alchimiste", imagePath: "/asset/Alphonse.jpeg"},
-        {nom: "Vardon", prenom: "Alexandre", role: "Dev", imagePath: "/asset/Alexandre.jpeg"},
-        {nom: "Elric", prenom: "Edward", role: "Alchimiste d'Etat", imagePath: "/asset/Edward.jpeg"},
-        {nom: "Elric", prenom: "Alphonse", role: "Alchimiste", imagePath: "/asset/Alphonse.jpeg"},
-        {nom: "Vardon", prenom: "Alexandre", role: "Dev", imagePath: "/asset/Alexandre.jpeg"}
+        {nom: "Traore", prenom: "Joaquim ", role: "Elève avocat", imagePath: "/asset/joaquim-traore.jpeg"},
+        {nom: "Treignat", prenom: "Maxime ", role: "Elève avocat", imagePath: "/asset/maxime-treignat.jpg"},
+        {nom: "Tricot", prenom: "Delphine", role: "Elève avocat", imagePath: "/asset/delphine-tricot.jpg"},
+        {nom: "Vahedi", prenom: "Arsalan ", role: "Elève avocat", imagePath: "/asset/arsalan-vahedi.jpg"},
+        {nom: "Vardon", prenom: "Elodie", role: "Elève avocat", imagePath: "/asset/elodie-vardon.jpeg"},
+        {nom: "Vardon", prenom: "Alexandre", role: "Développeur", imagePath: "/asset/alexandre-vardon.jpg"}
       ],
     }
   }
@@ -25,7 +25,7 @@ class Equipe extends Component {
       <div>
         <PageHeader className={"Equipe-Header"}>
           L'équipe <small> (Qui sommes nous ?)    </small>
-        </PageHeader>;
+        </PageHeader>
         <div className={"App"}>
           <PersonneList people={this.state.people}/>
         </div>
