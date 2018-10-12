@@ -101,6 +101,109 @@ const QUESTIONS_LIST = [
   },
 ];
 
+const QUESTIONS_LIST2 = [
+  {
+    id: "1",
+    label: "A quelle date les faits ont-ils été dénoncés ?",
+    responses: [
+      {
+        label: "Avant Le 10 décembre 2016",
+        nextQuestionId: "1.1",
+        info: undefined,
+      },
+      {
+        label: "Après le 11 décembre 2016",
+        nextQuestionId: "1.2",
+        info: undefined,
+      }
+    ],
+    previousQuestionId: undefined
+  },
+  {
+    id: "1.2",
+    label: "Qui est l'auteur du signalement ?",
+    responses: [
+      {
+        label: "Une personne physique",
+        nextQuestionId: "1.2.1",
+        info: "Si l'auteur du signalement est une personne physique, le régime de protections'applique.",
+      },
+      {
+        label: "Une personne morale",
+        nextQuestionId: undefined,
+        info: "Si l'auteur du signalement est une personne morale à but lucratif (société commerciale, société civile etc.) ou une personne morale à but non lucratif (association loi 1901 etc.), le régime de protection du statut de lanceur d'alerte NE S'APPLIQUE PAS.",
+      }
+    ],
+    previousQuestionId: "1"
+  },
+  {
+    id: "1.2.1",
+    label: "Quel est l'objet du signalement ?",
+    responses: [
+      {
+        label: "Un crime ou un délit",
+        nextQuestionId: undefined,
+        info: "Si le signalement porte sur un crime ou un délit dont son auteur a connaissance, le régime de protection s'applique.",
+      },
+      {
+        label: "Une violation grave et manifeste d'un engagement international régulièrement ratifié ou approuvé par la France, d'un acte unilatéral d'une organisation internationale pris sur le fondement de cet engagement, de la loi ou du règlement",
+        nextQuestionId: "1.2.1.1",
+        info: undefined,
+      },
+      {
+        label: "Une menace ou un préjudice grave pour l'intérêt général",
+        nextQuestionId: undefined,
+        info: "Si le signalement porte sur une menace ou un préjudice grave pour l'intérêt général, le régime de protection s'applique.",
+      },
+      {
+        label: "Des informations couvertes par le secret de la défense nationale, le secret médical ou le secret des relations entre un avocat et son client",
+        nextQuestionId: undefined,
+        info: "Si le signalement porte sur des informations couvertes par le secret de la défense nationale, le secret médical ou le secret des relations entre un avocat et son client, le régime de protection NE S'APPLIQUE PAS.",
+      }
+    ],
+    previousQuestionId: "1.2"
+  },
+  {
+    id: "1.2.1.1",
+    label: "Quelles sont les motivations du signalement ?",
+    responses: [
+      {
+        label: "Le signalement est effectué de manière désintéressée par son auteur",
+        nextQuestionId: "1.2.1.1.1",
+        info: "Si le signalement est effectué de manière désintéressée par son auteur, le régime de protection s'applique.",
+      },
+      {
+        label: "L'auteur du signalement est motivé par un grief ou une animosité personnels ou encore par la perspective d'un avantage personnel",
+        nextQuestionId: undefined,
+        info: "Si le signalement est effectué de manière désintéressée par son auteur, le régime de protection s'applique.",
+      }
+    ],
+    previousQuestionId: "1.2.1"
+  },
+  {
+    id: "1.2.1.1.1",
+    label: "L'auteur du signalement a-t-il respecté la procédure de signalement?",
+    responses: [
+      {
+        label: "PAS FINI",
+        nextQuestionId: undefined,
+        info: undefined,
+      },
+      {
+        label: "PAS FINI",
+        nextQuestionId: undefined,
+        info: undefined,
+      },
+      {
+        label: "PAS FINI",
+        nextQuestionId: undefined,
+        info: undefined,
+      },
+    ],
+    previousQuestionId: "1.2.1.1"
+  }
+];
+
 class FormulaireAlert extends Component {
   constructor() {
     super();
