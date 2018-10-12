@@ -6,6 +6,7 @@ import Question from "./Question";
 import ResponsesList from "./ResponsesList";
 import StepButton from "../tools/StepButton";
 import Navigationbar from "../navigation/Navigationbar";
+import ResponseModal from "./ResponseModal";
 
 const QUESTIONS_LIST = [
   {
@@ -13,9 +14,10 @@ const QUESTIONS_LIST = [
     question: "A quelle date les faits ont-ils été dénoncés ?",
     responses: [
       {label: "Avant le 10 décembre 2016", nextQuestionId: 11},
-      {label: "Après le 11 décembre 2016", nextQuestionId: 12}
+      {label: "Après le 11 décembre 2016", nextQuestionId: 99}
     ],
-    previousQuestionId: undefined
+    previousQuestionId: undefined,
+    isFinished: false
   },
   {
     id: 11,
@@ -28,7 +30,8 @@ const QUESTIONS_LIST = [
       {label: "Un crime ou un délit", nextQuestionId: 115},
       {label: "D'autres faits qui n'entrent dans aucune des qualifications précédentes", nextQuestionId: 116}
     ],
-    previousQuestionId: 1
+    previousQuestionId: 1,
+    isFinished: false
   },
   {
     id: 12,
@@ -38,7 +41,8 @@ const QUESTIONS_LIST = [
       {label: "Une personne morale à but lucratif (société commerciale, société civile etc.) ou une personne morale à" +
         "but non lucratif (association loi 1901 etc.)", nextQuestionId: 122}
     ],
-    previousQuestionId: 1
+    previousQuestionId: 1,
+    isFinished: true
   },
   {
     id: 111,
@@ -48,7 +52,8 @@ const QUESTIONS_LIST = [
       {label: "Une autre personne (un indépendant, un agent public, un fonctionnaire public, un salarié d'une" +
         "entreprise privée qui a connaissance de faits en dehors de l'exercice de ses fonctions).", nextQuestionId: 1112}
     ],
-    previousQuestionId: 11
+    previousQuestionId: 11,
+    isFinished: false
   },
   {
     id: 1111,
@@ -60,7 +65,8 @@ const QUESTIONS_LIST = [
       {label: "Les faits dont le salarié a connaissance et qu'il a dénoncé n'ont pas été découvert dans l'exercice" +
         "de ses fonctions.", nextQuestionId: 11113}
     ],
-    previousQuestionId: 111
+    previousQuestionId: 111,
+    isFinished: false
   },
   {
     id: 11111,
@@ -70,7 +76,8 @@ const QUESTIONS_LIST = [
       {label: "La personne dénonçant les faits de corruption les sait partiellement ou totalement inexacts.",
         nextQuestionId: 111112},
     ],
-    previousQuestionId: 1111
+    previousQuestionId: 1111,
+    isFinished: false
   },
   {
     id: 111111,
@@ -80,19 +87,36 @@ const QUESTIONS_LIST = [
       {label: "A l'une des autorités judiciaire ou administrative compétentes", nextQuestionId: 1111112},
       {label: "A toute autre personne (collègue, association, média)", nextQuestionId: 1111113},
     ],
-    previousQuestionId: 11111
+    previousQuestionId: 11111,
+    isFinished: false
   },
+  {
+    id: 99,
+    finalResponse: "La loi du 13 novembre 2007 ne s'applique pas. La personne ayant dénoncé les faits ne peut" +
+    "bénéficier du régime de protection des lanceurs d'alerte (nullité des représailles). Elle peut néanmoins demander" +
+    "une réparation au titre de la violation de son droit fondamental qu'est la liberté d'expression (article 10 CEDH)," +
+    "et/ou demander à ce que soit faite application du droit du travail (harcèlement moral, licenciement abusif, etc.).",
+    isFinished: true
+  }
 ];
 
 class FormulaireAlert extends Component {
   constructor() {
     super();
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
     this.state = {
       id: FormulaireAlert.defaultProps.id,
       question: FormulaireAlert.defaultProps.question,
       responses: FormulaireAlert.defaultProps.responses,
       selectedResponse: {label: ""},
-      previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId
+      previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
+      finalResponse: "",
+      isFinished: false,
+      show: false,
+
     };
   }
 
@@ -101,7 +125,7 @@ class FormulaireAlert extends Component {
     question: "A quelle date les faits ont-ils été dénoncés ?",
     responses: [
       {label: "Avant le 10 décembre 2016", nextQuestionId: 11},
-      {label: "Après le 11 décembre 2016", nextQuestionId: 12}
+      {label: "Après le 11 décembre 2016", nextQuestionId: 99}
     ],
     previousQuestionId: undefined
   };
@@ -109,6 +133,18 @@ class FormulaireAlert extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
     question: PropTypes.string.isRequired
+  };
+
+  handleClose = () => {
+    this.setState({
+      show: false
+    });
+  };
+
+  handleShow = () => {
+    this.setState({
+      show: true
+    });
   };
 
   setSelectedResponse = (response) => {
@@ -127,14 +163,33 @@ class FormulaireAlert extends Component {
           responses: nextQuestion[0].responses,
           selectedResponse: {label: ""},
           previousQuestionId: nextQuestion[0].previousQuestionId
-        })
+        });
+        if(nextQuestion[0].isFinished) {
+          this.setState(this.resetState());
+          this.setState({
+            finalResponse: nextQuestion[0].finalResponse
+          });
+          this.handleShow();
+        }
       } else {
-        console.log("La question suivante n'existe pas encore");
+    console.log("La question suivante n'existe pas encore");
       }
     } else {
       console.log("MDR TU PEUX PAS FAIRE ÇA MAMENE !!!!");
     }
   };
+
+  resetState() {
+    return {
+      id: FormulaireAlert.defaultProps.id,
+      question: FormulaireAlert.defaultProps.question,
+      responses: FormulaireAlert.defaultProps.responses,
+      selectedResponse: {label: ""},
+      previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
+      isFinished: false,
+      show: false
+    };
+  }
 
   getPreviousQuestion = (previousQuestionId) => {
     if(previousQuestionId !== undefined) {
@@ -157,7 +212,11 @@ class FormulaireAlert extends Component {
     return (
       <div className={App}>
         <Navigationbar/>
-        <Grid>
+        <ResponseModal show={this.state.show}
+                       handleClose={this.handleClose}
+                       finalResponse={this.state.finalResponse}
+        />
+        <Grid bsStyle={"container-fluid"}>
           <Row>
             <Col mdOffset={2} md={8}>
               <Panel>
