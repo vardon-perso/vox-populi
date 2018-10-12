@@ -25,7 +25,7 @@ class Equipe extends Component {
       <div>
         <PageHeader className={"Equipe-Header"}>
           L'équipe <small> (Qui sommes nous ?)    </small>
-        </PageHeader>;
+        </PageHeader>
         <div className={"App"}>
           <PersonneList people={this.state.people}/>
         </div>
