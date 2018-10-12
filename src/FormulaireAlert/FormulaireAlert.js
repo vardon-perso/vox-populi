@@ -225,17 +225,25 @@ class FormulaireAlert extends Component {
   }
 
   static defaultProps = {
-    id: 1,
-    question: "A quelle date les faits ont-ils été dénoncés ?",
+    id: "1",
+    label: "A quelle date les faits ont-ils été dénoncés ?",
     responses: [
-      {label: "Avant le 10 décembre 2016", nextQuestionId: 11},
-      {label: "Après le 11 décembre 2016", nextQuestionId: 99}
+      {
+        label: "Avant Le 10 décembre 2016",
+        nextQuestionId: "1.1",
+        info: undefined,
+      },
+      {
+        label: "Après le 11 décembre 2016",
+        nextQuestionId: "1.2",
+        info: undefined,
+      }
     ],
     previousQuestionId: undefined
   };
 
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     question: PropTypes.string.isRequired
   };
 
@@ -259,7 +267,7 @@ class FormulaireAlert extends Component {
 
   getNextQuestion = (nextQuestionId) => {
     if(this.state.selectedResponse.label !== ""){
-      const nextQuestion = QUESTIONS_LIST.filter(question => question.id === nextQuestionId);
+      const nextQuestion = QUESTIONS_LIST2.filter(question => question.id === nextQuestionId);
       if(nextQuestion[0] !== undefined) {
         this.setState({
           id: nextQuestion[0].id,
@@ -268,13 +276,13 @@ class FormulaireAlert extends Component {
           selectedResponse: {label: ""},
           previousQuestionId: nextQuestion[0].previousQuestionId
         });
-        if(nextQuestion[0].isFinished) {
-          this.setState(this.resetState());
-          this.setState({
-            finalResponse: nextQuestion[0].finalResponse
-          });
-          this.handleShow();
-        }
+        // if(nextQuestion[0] === undefined) {
+        //   this.setState(this.resetState());
+        //   this.setState({
+        //     finalResponse: nextQuestion[0].finalResponse
+        //   });
+        //   this.handleShow();
+        // }
       } else {
     console.log("La question suivante n'existe pas encore");
       }
@@ -283,21 +291,21 @@ class FormulaireAlert extends Component {
     }
   };
 
-  resetState() {
-    return {
-      id: FormulaireAlert.defaultProps.id,
-      question: FormulaireAlert.defaultProps.question,
-      responses: FormulaireAlert.defaultProps.responses,
-      selectedResponse: {label: ""},
-      previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
-      isFinished: false,
-      show: false
-    };
-  }
+  // resetState() {
+  //   return {
+  //     id: FormulaireAlert.defaultProps.id,
+  //     question: FormulaireAlert.defaultProps.question,
+  //     responses: FormulaireAlert.defaultProps.responses,
+  //     selectedResponse: {label: ""},
+  //     previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
+  //     isFinished: false,
+  //     show: false
+  //   };
+  // }
 
   getPreviousQuestion = (previousQuestionId) => {
     if(previousQuestionId !== undefined) {
-      const previousQuestion = QUESTIONS_LIST.filter(question => question.id === previousQuestionId);
+      const previousQuestion = QUESTIONS_LIST2.filter(question => question.id === previousQuestionId);
       this.setState({
         id: previousQuestion[0].id,
         question: previousQuestion[0].question,
