@@ -5,7 +5,7 @@ import {Col, Grid, Panel, Row} from "react-bootstrap";
 import Question from "./Question";
 import ResponsesList from "./ResponsesList";
 import StepButton from "../tools/StepButton";
-import Navigationbar from "../navigation/Navigationbar";
+import Navigationbar from "../Navigationbar/Navigationbar";
 import ResponseModal from "./ResponseModal";
 import '../App.css'
 import InfoPanel from "./InfoPanel";
