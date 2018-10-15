@@ -1,0 +1,33 @@
+.Header {
+    width: 100%;
+    position:relative;
+}
+
+.Header-Content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 960px;
+    margin: 0 auto;
+    color: #00a9c5;
+    text-align: center;
+}
+
+.Header-Info {
+    zoom: 1;
+    text-align: center;
+    vertical-align: baseline;
+    display: inline;
+    color: darkslategray;
+    font-weight: bold;
+}
+
+.Header-Logo {
+    height: 80px;
+    padding: 0 27px;
+    margin: 0 20px;
+    border-left: 1px solid #e7e7e7;
+    border-right: 1px solid #e7e7e7;
+    display: inline-block;
+    vertical-align: center;
+    zoom: 1;
+}
