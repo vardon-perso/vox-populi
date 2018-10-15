@@ -1,3 +1,16 @@
 .Navigationbar {
-    
+    background-color: #669DA8;
+}
+
+.navbar-default .navbar-brand {
+    margin: 8px;
+    color: white;
+}
+
+.Navigationbar-Title {
+    font-weight: bold;
+
+}
+.Navigationbar-Text {
+    border-left: 1px solid #e7e7e7;
 }

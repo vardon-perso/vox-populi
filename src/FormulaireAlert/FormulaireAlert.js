@@ -5,7 +5,6 @@ import {Col, Grid, Panel, Row} from "react-bootstrap";
 import Question from "./Question";
 import ResponsesList from "./ResponsesList";
 import StepButton from "../tools/StepButton";
-import Navigationbar from "../Navigationbar/Navigationbar";
 import ResponseModal from "./ResponseModal";
 import '../App.css'
 import InfoPanel from "./InfoPanel";
@@ -330,7 +329,6 @@ class FormulaireAlert extends Component {
   render() {
     return (
       <div className={App}>
-        <Navigationbar/>
         <ResponseModal show={this.state.show}
                        handleClose={this.handleClose}
                        finalResponse={this.state.finalResponse}

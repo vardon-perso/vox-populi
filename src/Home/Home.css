@@ -1,0 +1,10 @@
+.Home {
+    background-image: url("/asset/background2.jpg");
+    height: 80vh;
+    background-size: cover;
+    text-align: center;
+}
+
+.Home-Logo {
+    height: 100px;
+}
