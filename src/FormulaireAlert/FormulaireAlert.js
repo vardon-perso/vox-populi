@@ -8,6 +8,7 @@ import StepButton from "../tools/StepButton";
 import Navigationbar from "../navigation/Navigationbar";
 import ResponseModal from "./ResponseModal";
 import '../App.css'
+import InfoPanel from "./InfoPanel";
 
 const QUESTIONS_LIST = [
   {
@@ -101,6 +102,109 @@ const QUESTIONS_LIST = [
   },
 ];
 
+const QUESTIONS_LIST2 = [
+  {
+    id: "1",
+    label: "A quelle date les faits ont-ils été dénoncés ?",
+    responses: [
+      {
+        label: "Avant Le 10 décembre 2016",
+        nextQuestionId: "1.1",
+        info: undefined,
+      },
+      {
+        label: "Après le 11 décembre 2016",
+        nextQuestionId: "1.2",
+        info: undefined,
+      }
+    ],
+    previousQuestionId: undefined
+  },
+  {
+    id: "1.2",
+    label: "Qui est l'auteur du signalement ?",
+    responses: [
+      {
+        label: "Une personne physique",
+        nextQuestionId: "1.2.1",
+        info: "Si l'auteur du signalement est une personne physique, le régime de protections'applique.",
+      },
+      {
+        label: "Une personne morale",
+        nextQuestionId: undefined,
+        info: "Si l'auteur du signalement est une personne morale à but lucratif (société commerciale, société civile etc.) ou une personne morale à but non lucratif (association loi 1901 etc.), le régime de protection du statut de lanceur d'alerte NE S'APPLIQUE PAS.",
+      }
+    ],
+    previousQuestionId: "1"
+  },
+  {
+    id: "1.2.1",
+    label: "Quel est l'objet du signalement ?",
+    responses: [
+      {
+        label: "Un crime ou un délit",
+        nextQuestionId: undefined,
+        info: "Si le signalement porte sur un crime ou un délit dont son auteur a connaissance, le régime de protection s'applique.",
+      },
+      {
+        label: "Une violation grave et manifeste d'un engagement international régulièrement ratifié ou approuvé par la France, d'un acte unilatéral d'une organisation internationale pris sur le fondement de cet engagement, de la loi ou du règlement",
+        nextQuestionId: "1.2.1.1",
+        info: undefined,
+      },
+      {
+        label: "Une menace ou un préjudice grave pour l'intérêt général",
+        nextQuestionId: undefined,
+        info: "Si le signalement porte sur une menace ou un préjudice grave pour l'intérêt général, le régime de protection s'applique.",
+      },
+      {
+        label: "Des informations couvertes par le secret de la défense nationale, le secret médical ou le secret des relations entre un avocat et son client",
+        nextQuestionId: undefined,
+        info: "Si le signalement porte sur des informations couvertes par le secret de la défense nationale, le secret médical ou le secret des relations entre un avocat et son client, le régime de protection NE S'APPLIQUE PAS.",
+      }
+    ],
+    previousQuestionId: "1.2"
+  },
+  {
+    id: "1.2.1.1",
+    label: "Quelles sont les motivations du signalement ?",
+    responses: [
+      {
+        label: "Le signalement est effectué de manière désintéressée par son auteur",
+        nextQuestionId: "1.2.1.1.1",
+        info: "Si le signalement est effectué de manière désintéressée par son auteur, le régime de protection s'applique.",
+      },
+      {
+        label: "L'auteur du signalement est motivé par un grief ou une animosité personnels ou encore par la perspective d'un avantage personnel",
+        nextQuestionId: undefined,
+        info: "Si le signalement est effectué de manière désintéressée par son auteur, le régime de protection s'applique.",
+      }
+    ],
+    previousQuestionId: "1.2.1"
+  },
+  {
+    id: "1.2.1.1.1",
+    label: "L'auteur du signalement a-t-il respecté la procédure de signalement?",
+    responses: [
+      {
+        label: "PAS FINI",
+        nextQuestionId: undefined,
+        info: undefined,
+      },
+      {
+        label: "PAS FINI",
+        nextQuestionId: undefined,
+        info: undefined,
+      },
+      {
+        label: "PAS FINI",
+        nextQuestionId: undefined,
+        info: undefined,
+      },
+    ],
+    previousQuestionId: "1.2.1.1"
+  }
+];
+
 class FormulaireAlert extends Component {
   constructor() {
     super();
@@ -110,30 +214,37 @@ class FormulaireAlert extends Component {
 
     this.state = {
       id: FormulaireAlert.defaultProps.id,
-      question: FormulaireAlert.defaultProps.question,
+      label: FormulaireAlert.defaultProps.label,
       responses: FormulaireAlert.defaultProps.responses,
       selectedResponse: {label: ""},
       previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
       finalResponse: "",
-      isFinished: false,
       show: false,
-
+      info: ""
     };
   }
 
   static defaultProps = {
-    id: 1,
-    question: "A quelle date les faits ont-ils été dénoncés ?",
+    id: "1",
+    label: "A quelle date les faits ont-ils été dénoncés ?",
     responses: [
-      {label: "Avant le 10 décembre 2016", nextQuestionId: 11},
-      {label: "Après le 11 décembre 2016", nextQuestionId: 99}
+      {
+        label: "Avant Le 10 décembre 2016",
+        nextQuestionId: "1.1",
+        info: undefined,
+      },
+      {
+        label: "Après le 11 décembre 2016",
+        nextQuestionId: "1.2",
+        info: undefined,
+      }
     ],
     previousQuestionId: undefined
   };
 
   static propTypes = {
-    id: PropTypes.number.isRequired,
-    question: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
   };
 
   handleClose = () => {
@@ -148,30 +259,37 @@ class FormulaireAlert extends Component {
     });
   };
 
+  handleInfo = (info) => {
+    this.setState({
+      info: info
+    });
+  };
+
   setSelectedResponse = (response) => {
     this.setState({
       selectedResponse: response
     })
   };
 
-  getNextQuestion = (nextQuestionId) => {
+  getNextQuestion = (response) => {
     if(this.state.selectedResponse.label !== ""){
-      const nextQuestion = QUESTIONS_LIST.filter(question => question.id === nextQuestionId);
+      const nextQuestion = QUESTIONS_LIST2.filter(question => question.id === response.nextQuestionId);
+      this.handleInfo(response.info);
       if(nextQuestion[0] !== undefined) {
         this.setState({
           id: nextQuestion[0].id,
-          question: nextQuestion[0].question,
+          label: nextQuestion[0].label,
           responses: nextQuestion[0].responses,
           selectedResponse: {label: ""},
           previousQuestionId: nextQuestion[0].previousQuestionId
         });
-        if(nextQuestion[0].isFinished) {
-          this.setState(this.resetState());
-          this.setState({
-            finalResponse: nextQuestion[0].finalResponse
-          });
-          this.handleShow();
-        }
+        // if(nextQuestion[0] === undefined) {
+        //   this.setState(this.resetState());
+        //   this.setState({
+        //     finalResponse: nextQuestion[0].finalResponse
+        //   });
+        //   this.handleShow();
+        // }
       } else {
     console.log("La question suivante n'existe pas encore");
       }
@@ -180,24 +298,24 @@ class FormulaireAlert extends Component {
     }
   };
 
-  resetState() {
-    return {
-      id: FormulaireAlert.defaultProps.id,
-      question: FormulaireAlert.defaultProps.question,
-      responses: FormulaireAlert.defaultProps.responses,
-      selectedResponse: {label: ""},
-      previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
-      isFinished: false,
-      show: false
-    };
-  }
+  // resetState() {
+  //   return {
+  //     id: FormulaireAlert.defaultProps.id,
+  //     question: FormulaireAlert.defaultProps.question,
+  //     responses: FormulaireAlert.defaultProps.responses,
+  //     selectedResponse: {label: ""},
+  //     previousQuestionId: FormulaireAlert.defaultProps.previousQuestionId,
+  //     isFinished: false,
+  //     show: false
+  //   };
+  // }
 
   getPreviousQuestion = (previousQuestionId) => {
     if(previousQuestionId !== undefined) {
-      const previousQuestion = QUESTIONS_LIST.filter(question => question.id === previousQuestionId);
+      const previousQuestion = QUESTIONS_LIST2.filter(question => question.id === previousQuestionId);
       this.setState({
         id: previousQuestion[0].id,
-        question: previousQuestion[0].question,
+        label: previousQuestion[0].label,
         responses: previousQuestion[0].responses,
         selectedResponse: {label: ""},
         previousQuestionId: previousQuestion[0].previousQuestionId
@@ -223,7 +341,7 @@ class FormulaireAlert extends Component {
               <Panel>
                 <Panel.Heading>Questionaire lanceur d'alerte</Panel.Heading>
                 <Panel.Body>
-                  <Question label={this.state.question}/>
+                  <Question label={this.state.label}/>
                   <br/>
 
                   <ResponsesList
@@ -233,7 +351,6 @@ class FormulaireAlert extends Component {
                   <br/>
 
                   <Row>
-                    <p>Réponse : {this.state.selectedResponse.label}</p>
                     <Col xs={2} xsOffset={1} mdOffset={1} md={2}>
                       <StepButton label={"Précédent"}
                                   onClick={this.getPreviousQuestion}
@@ -243,12 +360,13 @@ class FormulaireAlert extends Component {
                     <Col xsOffset={4} xs={2} mdOffset={6} md={2}>
                       <StepButton label={"Suivant"}
                                   onClick={this.getNextQuestion}
-                                  parameter={this.state.selectedResponse.nextQuestionId}
+                                  parameter={this.state.selectedResponse}
                                   style={"primary"}/>
                     </Col>
                   </Row>
                 </Panel.Body>
               </Panel>
+              <InfoPanel info={this.state.info}/>
             </Col>
           </Row>
         </Grid>
