@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
-import {PageHeader} from "react-bootstrap";
-import '../App.css'
-import './Equipe.css'
-import PersonneList from "./PersonneList";
+import Description from "./Description/Description";
+import Team from "./Team/Team";
+import "./Infos.css"
+import {Col, Grid, Row} from "react-bootstrap";
 
-
-class Equipe extends Component {
+class Infos extends Component {
   constructor() {
     super();
     this.state = {
@@ -19,19 +18,21 @@ class Equipe extends Component {
       ],
     }
   }
-
   render() {
     return(
-      <div>
-        <PageHeader className={"Equipe-Header"}>
-          L'équipe <small> (Qui sommes nous ?)    </small>
-        </PageHeader>
-        <div className={"App"}>
-          <PersonneList people={this.state.people}/>
-        </div>
+      <div className={"Infos"}>
+        <Row>
+          <Col mdOffset={1} md={5} xs={12}>
+            <Description/>
+          </Col>
+          <Col md={5} xs={12}>
+            <Team people={this.state.people}/>
+          </Col>
+        </Row>
       </div>
+
     )
   }
 }
 
-export default Equipe
+export default Infos

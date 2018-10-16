@@ -1,17 +1,17 @@
-.Equipe-Image {
+.Team-Image {
     width: 100px;
     height: 100px;
 }
 
-.Equipe-Role {
+.Team-Role {
     font-weight: bold;
 }
 
-.Equipe-Panel {
+.Team-Panel {
     background-color: #f5f5f5;
 }
 
-.Equipe-Header {
+.Team-Header {
     padding-left: 40px;
     font-size: medium;
 }
