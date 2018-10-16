@@ -7,10 +7,10 @@ const Description = () => (
     <Row>
       <Col mdOffset={2} md={8}>
         <Image className={"Description-Logo"} src="/asset/vox-populi-logo.png"/>
-        <p>
+        <h2>
           L’outil de diagnostic et d’aide à la décision destiné
           aux lanceurs d’alerte et aux entités chargées de les orienter
-        </p>
+        </h2>
       </Col>
     </Row>
   </div>

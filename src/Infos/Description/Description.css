@@ -1,9 +1,12 @@
 .Description {
+    padding-top: 120px;
     text-align: center;
- }
+    padding-bottom: 100px;
+
+}
 
 .Description-Logo {
-    height: 30vh;
+    height: 200px;
 }
 
 .Description-Text {

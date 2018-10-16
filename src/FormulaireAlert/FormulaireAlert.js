@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import App from "../App";
 import {Col, Grid, Panel, Row} from "react-bootstrap";
 import Question from "./Question";
 import ResponsesList from "./ResponsesList";
@@ -8,6 +7,7 @@ import StepButton from "../tools/StepButton";
 import ResponseModal from "./ResponseModal";
 import '../App.css'
 import InfoPanel from "./InfoPanel";
+import './FormulaireAlert.css'
 
 const QUESTIONS_LIST = [
   {
@@ -328,7 +328,7 @@ class FormulaireAlert extends Component {
 
   render() {
     return (
-      <div className={App}>
+      <div className={"FormulaireAlert"}>
         <ResponseModal show={this.state.show}
                        handleClose={this.handleClose}
                        finalResponse={this.state.finalResponse}
