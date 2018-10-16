@@ -1,4 +1,4 @@
 .FormulaireAlert {
     padding-top: 10vh;
-    height: 80vh;
+    min-height: 80vh;
 }

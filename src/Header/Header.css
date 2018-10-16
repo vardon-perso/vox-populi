@@ -12,6 +12,7 @@
 
 .Header-Info {
     zoom: 1;
+    font-size: calc(1px + 1vh);
     text-align: center;
     vertical-align: baseline;
     display: inline;

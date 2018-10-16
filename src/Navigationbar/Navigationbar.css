@@ -3,7 +3,7 @@
 }
 
 .navbar-default .navbar-brand {
-    margin: 8px;
+    margin: 1vh;
     color: white;
 }
 
@@ -12,5 +12,6 @@
 
 }
 .Navigationbar-Text {
+    font-size: calc(8px + 1vh);
     border-left: 1px solid #e7e7e7;
 }
